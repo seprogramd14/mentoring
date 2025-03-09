@@ -1,0 +1,8 @@
+pillow~=11.1.0
+fastapi~=0.115.11
+torchvision~=0.21.0
+python-dotenv~=1.0.1
+langchain-core~=0.3.43
+langchain-openai~=0.3.8
+torch~=2.6.0
+pandas~=2.2.3
