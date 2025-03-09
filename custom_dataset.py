@@ -1,9 +1,9 @@
 import os
 import pandas as pd
 from PIL import Image
-from torch.utils import data
+from torch.utils.data import Dataset
 
-class Dataset(data.Dataset):
+class CustomDataset(Dataset):
     def __init__(self, label_path, img_dir, transform=None):
         self.img_dir = img_dir
         self.label_file = pd.read_csv(label_path)

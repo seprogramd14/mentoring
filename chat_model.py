@@ -5,14 +5,12 @@ from langchain_core.prompts import PromptTemplate
 
 load_dotenv()
 
-description = "이 {information} 에 대해서 "
-information = "총"
+class ChatBot:
+    def __init__(self, description):
+        self.prompt = PromptTemplate.from_template(template=description)
+        self.llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
+        self.parser = StrOutputParser()
+        self.chain = self.prompt | self.llm | self.parser
 
-prompt = PromptTemplate.from_template(template=description)
-llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
-output_parser = StrOutputParser()
-
-chain = prompt | llm | output_parser
-
-res = chain.invoke(input={"information": information})
-print(res)
+    def __call__(self, information):
+        return self.chain.invoke(input={"information": information})

@@ -1,6 +1,8 @@
 import json
 import torch
 from torch import nn
+from torch.nn import Softmax
+
 from processor import ImageProcessor
 from torchvision.models import vgg16
 
@@ -22,13 +24,13 @@ class CustomVgg16(nn.Module):
         super().__init__()
         self.vgg16_model = vgg16(pretrained=True)
         self.transforms = transforms
-        ilsvrc_class_index = json.load(open('./pytorch_advanced/1_image_classification/data/imagenet_class_index.json', 'r'))
-        self.predictor = ILSVRCPredictor(ilsvrc_class_index)
+        self.softmax = nn.Softmax(dim=1)
 
     def forward(self, img):
         self.vgg16_model.eval()
         img_transform = self.transforms(img).unsqueeze(0)
         out = self.vgg16_model(img_transform)
+        probabilities = self.softmax(out)
+        class_idx = str(torch.argmax(probabilities, dim=1).item())
 
-        result = self.predictor.predict(out)
-        return result
+        return class_idx
