@@ -15,4 +15,4 @@ async def image_upload(file: UploadFile):
     custom_vgg16 = CustomVgg16()
     out = custom_vgg16(img)
     chat_bot = ChatBot(description)
-    return chat_bot("고양이")
+    return chat_bot(out)
